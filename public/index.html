@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问题墙</title>
+</head>
+<body>
+<stack-overflow>hello</stack-overflow>
+<script src="vue.js"></script>
+<script>
+    var StackOverflow = Vue.extend({
+        name: 'stack-overflow',
+        template: '<div>' +
+            // 递归地调用它自己
+        '2312' +
+        '</div>'
+    });
+
+    new Vue({
+        el: 'body',
+        components: {
+            'stack-overflow': StackOverflow
+        }
+    });
+</script>
+</body>
+</html>
