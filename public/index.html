@@ -22,7 +22,7 @@
                 <div class="question-head">
                     <img :src="question.headIcon | headIcon" class="head-icon" width="32" height="32">
                     <span>{{ question.time | formatTime }}</span> 
-                    @ 
+                    <span v-if="question.target"> @ </span>
                     <span class="target">{{ question.target }}</span>
                 </div>
                 <div class="question-body">{{ question.detail }}</div>

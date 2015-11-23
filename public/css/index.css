@@ -57,3 +57,7 @@ ul {
   height: 0;
   opacity: 0;
 }
+
+.pure-form button[type="submit"] {
+	margin: 0;
+}
