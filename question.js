@@ -20,13 +20,23 @@ class Question {
         this.detail = detail;
     }
 
+    // Load persisted data from local file
     static load() {
-        fs.openSync(storagePath, 'a');
         let arr = [];
-        try {
-            arr = JSON.parse(fs.readFileSync(storagePath, 'utf-8'));
-        } catch (e) {
-            console.error(e);
+
+        if (!fs.existsSync(storagePath)) {
+            fs.closeSync(fs.openSync(storagePath, 'w'));
+            fs.writeFileSync(storagePath, '[]', 'utf-8');
+        }
+        else {
+            try {
+                arr = JSON.parse(fs.readFileSync(storagePath, 'utf-8'));
+            }
+            catch (e) {
+                /* eslint-disable */
+                console.error(e);
+                /* eslint-enable */
+            }
         }
 
         if (arr.length > 0) {
@@ -42,29 +52,56 @@ class Question {
         return questions;
     }
 
+    // Persist data in memory to local file
     static persist() {
         let questionsJson = JSON.stringify(questions);
         fs.writeFileSync(storagePath, questionsJson, 'utf-8');
     }
 
     static fromRaw(pojo) {
+        !pojo.time && (pojo.time = new Date().getTime());
         return new Question(pojo.time, pojo.target, pojo.detail);
     }
 
+    // List questions, only retrun the new added questions
     static list(ctx) {
         let time = ctx.request.query.time;
         let results = questions;
         if (time) {
             time = parseInt(time, 10);
+            if (time > 0 && (questions.length === 0 || time < questions[0].time)) {
+                ctx.body = [{cleared: true}];
+                return;
+            }
             results = u.filter(results, (question) => question.time > time);
         }
-        ctx.body = JSON.stringify(results);
+        ctx.body = Question.sort(results);
+    }
+
+    static create(ctx) {
+        let body = ctx.request.body;
+        questions.push(Question.fromRaw(body));
+        ctx.body = {success: true};
+    }
+
+    // Clear all questions and flush to all clients, empty the question wall
+    // Here, admin and baidubce@9527 are magic words
+    static clear(ctx, name, password) {
+        if (name === 'admin' && password === 'baidubce@9527') {
+            questions.splice(0, questions.length);
+            ctx.body = {success: true, result: {cleared: true}};
+            return;
+        }
+        
+        ctx.status = 404;
     }
 
     static sort(questions) {
         questions.sort(function (a, b) {
             return a.time - b.time;
         });
+
+        return questions;
     }
 }
 

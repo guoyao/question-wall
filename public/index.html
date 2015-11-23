@@ -2,26 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>问题墙</title>
+    <link rel="stylesheet" type="text/css" href="css/pure.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-<stack-overflow>hello</stack-overflow>
-<script src="vue.js"></script>
-<script>
-    var StackOverflow = Vue.extend({
-        name: 'stack-overflow',
-        template: '<div>' +
-            // 递归地调用它自己
-        '2312' +
-        '</div>'
-    });
+    <wall></wall>
+    <question></question>
 
-    new Vue({
-        el: 'body',
-        components: {
-            'stack-overflow': StackOverflow
-        }
-    });
-</script>
+    <!-- wall组件模板 -->
+    <template id="wall-template">
+        <ul class="wall">
+            <li v-if="questions.length === 0">
+                <div class="question-head" v-text="new Date() | formatTime"></div>
+                <div class="question-body">暂无提问</div>
+            </li>
+            <li v-for="question in questions" transition="expand">
+                <div class="question-head">
+                    <img :src="question.headIcon | headIcon" class="head-icon" width="32" height="32">
+                    <span>{{ question.time | formatTime }}</span> 
+                    @ 
+                    <span class="target">{{ question.target }}</span>
+                </div>
+                <div class="question-body">{{ question.detail }}</div>
+            </li>
+        </ul>
+    </template>
+
+    <!-- question组件模板 -->
+    <template id="question-template">
+        <form class="pure-form question" @submit.prevent="submit">
+            <fieldset class="pure-group">
+                <input name="target" 
+                    type="text" 
+                    class="pure-input-1" 
+                    placeholder="提问目标，比如炀、徐军" 
+                    v-model="question.target">
+                <textarea name="detail" 
+                    class="pure-input-1" 
+                    placeholder="提问内容" 
+                    v-model="question.detail"></textarea>
+            </fieldset>
+            <button type="submit" class="pure-button pure-button-primary" :disabled="submiting">提交</button>
+            <button type="button" 
+                class="pure-button" 
+                v-if="autoGotoBottomEnabled" 
+                @click="toggleGotoBottom">禁用自动跳转到底部</button>
+            <button type="button" 
+                class="pure-button" 
+                v-if="!autoGotoBottomEnabled"
+                @click="toggleGotoBottom">启用自动跳转到底部</button>
+        </form>
+    </template>
+    <script src="vue.js"></script>
+    <script src="vue-resource.js"></script>
+    <script src="vue-validator.js"></script>
+    <script src="underscore.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

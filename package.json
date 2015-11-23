@@ -4,6 +4,7 @@
   "description": "question wall",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -14,10 +15,14 @@
   "license": "ISC",
   "dependencies": {
     "koa": "^2.0.0-alpha.3",
+    "koa-bodyparser": "^3.0.0",
     "koa-convert": "^1.2.0",
     "koa-logger": "^2.0.0",
     "koa-route": "^3.0.0",
     "koa-static": "^1.5.2",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "vue": "^1.0.8",
+    "vue-resource": "^0.1.17",
+    "vue-validator": "^1.4.4"
   }
 }
