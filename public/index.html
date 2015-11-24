@@ -12,7 +12,7 @@
     <question></question>
 
     <!-- wall组件模板 -->
-    <template id="wall-template">
+    <script type="text/template" id="wall-template">
         <ul class="wall">
             <li v-if="questions.length === 0">
                 <div class="question-head" v-text="new Date() | formatTime"></div>
@@ -28,10 +28,10 @@
                 <div class="question-body">{{ question.detail }}</div>
             </li>
         </ul>
-    </template>
+    </script>
 
     <!-- question组件模板 -->
-    <template id="question-template">
+    <script type="text/template" id="question-template">
         <form class="pure-form question" @submit.prevent="submit">
             <fieldset class="pure-group">
                 <input name="target" 
@@ -54,10 +54,9 @@
                 v-if="!autoGotoBottomEnabled"
                 @click="toggleGotoBottom">启用自动跳转到底部</button>
         </form>
-    </template>
+    </script>
     <script src="vue.js"></script>
     <script src="vue-resource.js"></script>
-    <script src="vue-validator.js"></script>
     <script src="underscore.js"></script>
     <script src="js/index.js"></script>
 </body>
