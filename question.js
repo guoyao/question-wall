@@ -92,7 +92,7 @@ class Question {
             ctx.body = {success: true, result: {cleared: true}};
             return;
         }
-        
+
         ctx.status = 404;
     }
 
@@ -106,3 +106,4 @@ class Question {
 }
 
 exports = module.exports = Question;
+
