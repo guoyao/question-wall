@@ -21,7 +21,7 @@
             <li v-for="question in questions" transition="expand">
                 <div class="question-head">
                     <img :src="question.headIcon | headIcon" class="head-icon" width="32" height="32">
-                    <span>{{ question.time | formatTime }}</span> 
+                    <span>{{ question.time | formatTime }}</span>
                     <span v-if="question.target"> @ </span>
                     <span class="target">{{ question.target }}</span>
                 </div>
@@ -34,23 +34,23 @@
     <script type="text/template" id="question-template">
         <form class="pure-form question" @submit.prevent="submit">
             <fieldset class="pure-group">
-                <input name="target" 
-                    type="text" 
-                    class="pure-input-1" 
-                    placeholder="提问目标，比如炀、徐军" 
+                <input name="target"
+                    type="text"
+                    class="pure-input-1"
+                    placeholder="提问目标，比如炀、徐军"
                     v-model="question.target">
-                <textarea name="detail" 
-                    class="pure-input-1" 
-                    placeholder="提问内容" 
+                <textarea name="detail"
+                    class="pure-input-1"
+                    placeholder="提问内容"
                     v-model="question.detail"></textarea>
             </fieldset>
             <button type="submit" class="pure-button pure-button-primary" :disabled="submiting">提交</button>
-            <button type="button" 
-                class="pure-button" 
-                v-if="autoGotoBottomEnabled" 
+            <button type="button"
+                class="pure-button"
+                v-if="autoGotoBottomEnabled"
                 @click="toggleGotoBottom">禁用自动跳转到底部</button>
-            <button type="button" 
-                class="pure-button" 
+            <button type="button"
+                class="pure-button"
                 v-if="!autoGotoBottomEnabled"
                 @click="toggleGotoBottom">启用自动跳转到底部</button>
         </form>
@@ -60,5 +60,14 @@
     <script src="vue-resource.min.js"></script>
     <script src="underscore-min.js"></script>
     <script src="js/index.js"></script>
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3d5cef4ac25819175e73df13eeeaf37c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 </body>
 </html>
